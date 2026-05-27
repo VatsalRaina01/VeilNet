@@ -1,0 +1,36 @@
+# Virtual Environment
+backend/venv/
+venv/
+.venv/
+
+# Pycache and bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node Modules and build artifacts
+node_modules/
+frontend/node_modules/
+dist/
+build/
+
+# Local configuration
+.env
+.env.local
+
+# Model checkpoints and weights
+model/checkpoints/
+model/veilnet-ner-model/
+*.bin
+*.pt
+*.h5
+
+# Local PDF test assets (User request)
+testPDFs/
+redacted_email_conversations_redaction_test.pdf
+
+# IDE folders
+.vscode/
+.idea/
+.DS_Store
