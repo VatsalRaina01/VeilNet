@@ -2,7 +2,7 @@
 import requests
 import json
 
-PDF_PATH = r"c:\Users\Vinit\Project VeilNet\VeilNet\testPDFs\AryanResume.pdf"
+PDF_PATH = r"testPDFs\AryanResume.pdf"
 
 with open(PDF_PATH, "rb") as f:
     r = requests.post(

@@ -32,19 +32,22 @@ async def redact_pdf(
 
     # Apply redactions to each page
     for finding in findings_data:
-        # findings usually contain { 'page': 1, 'coords': [x0, y0, x1, y1] }
+        # findings usually contain { 'page': 1, 'coords': [x0, y0, x1, y1] } or manual word { 'page': 1, 'value': 'secret' }
         page_num = finding.get("page", 1) - 1  # 0-indexed for fitz
         coords = finding.get("coords")
+        value = finding.get("value")
         
-        if not coords or len(coords) != 4:
-            continue
-            
         if 0 <= page_num < len(doc):
             page = doc[page_num]
-            rect = fitz.Rect(coords[0], coords[1], coords[2], coords[3])
             
-            # Add redaction annotation (fill=(0, 0, 0) makes it a solid black box)
-            page.add_redact_annot(rect, fill=(0, 0, 0))
+            if coords and len(coords) == 4:
+                rect = fitz.Rect(coords[0], coords[1], coords[2], coords[3])
+                page.add_redact_annot(rect, fill=(0, 0, 0))
+            elif value:
+                # If no coords are supplied (manual word selection), sweep page to locate coordinates and redact natively!
+                rects = page.search_for(value)
+                for rect in rects:
+                    page.add_redact_annot(rect, fill=(0, 0, 0))
             
     # Commit redactions on all pages
     for page in doc:

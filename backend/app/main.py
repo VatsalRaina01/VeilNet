@@ -277,6 +277,8 @@ async def analyze_pdf(file: UploadFile = File(...)):
         "filename": file.filename,
         "findings_count": len(output_findings),
         "findings": output_findings,
+        "full_text": full_text,
+        "page_texts": page_texts,
         "document_info": {
             "doc_type": doc_profile.doc_type,
             "doc_type_confidence": doc_profile.doc_type_confidence,
